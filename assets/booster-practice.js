@@ -41,7 +41,8 @@
   var assignmentId = config.assignmentId || 'cel-skill-booster';
   var query = new URLSearchParams(window.location.search);
   var testMode = query.get('test') === '1';
-  var teacherAnswerToken = cleanReference(query.get('teacherAnswerToken'));
+  // Teacher test links carry the token in the fragment; the access script keeps it for this tab (2026-11-11).
+  var teacherAnswerToken = cleanReference(query.get('teacherAnswerToken') || (testMode && window.CelinePortalAccess && window.CelinePortalAccess.teacherTestToken ? window.CelinePortalAccess.teacherTestToken() : ''));
   var teacherAnswerMode = testMode && Boolean(teacherAnswerToken);
   var reviewSubmissionId = cleanReference(query.get('reviewSubmissionId'));
   var progressSaveId = cleanReference(query.get('progressSaveId'));
@@ -854,10 +855,10 @@
   function renderUncheckedResult(result) {
     var resultBox = document.getElementById('portal-result');
     resultBox.hidden = false;
-    resultBox.innerHTML = '<span class="result-kicker">Submitted</span><div class="result-score"><strong>Answers saved</strong><span>Not checked yet</span></div><p>Your teacher has your work. Your score and the correct answers will appear here after it is checked.</p>';
+    resultBox.innerHTML = '<span class="result-kicker">Submitted</span><div class="result-score"><strong>已提交</strong><span>等待老师批改</span></div><p>已提交，等待老师批改。批改后，分数和正确答案会显示在这里。</p>';
     document.getElementById('portal-submit-copy').hidden = true;
     document.getElementById('portal-unanswered').textContent = testMode && !submittedReviewMode ? 'Teacher test' : 'Submitted';
-    document.getElementById('portal-submit').textContent = 'Submitted · not checked yet';
+    document.getElementById('portal-submit').textContent = '已提交 · 等待老师批改';
     updateProgress();
     if (submittedReviewMode) renderSubmittedDifficultyFlags(result.difficultyFlags || []);
     else {
