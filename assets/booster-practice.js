@@ -855,10 +855,10 @@
   function renderUncheckedResult(result) {
     var resultBox = document.getElementById('portal-result');
     resultBox.hidden = false;
-    resultBox.innerHTML = '<span class="result-kicker">Submitted</span><div class="result-score"><strong>已提交</strong><span>等待老师批改</span></div><p>已提交，等待老师批改。批改后，分数和正确答案会显示在这里。</p>';
+    resultBox.innerHTML = '<span class="result-kicker">Submitted</span><div class="result-score"><strong>Answers saved</strong><span>Waiting for review</span></div><p>Submitted. Waiting for your teacher to review. Your score and the correct answers will appear here after the review.</p>';
     document.getElementById('portal-submit-copy').hidden = true;
     document.getElementById('portal-unanswered').textContent = testMode && !submittedReviewMode ? 'Teacher test' : 'Submitted';
-    document.getElementById('portal-submit').textContent = '已提交 · 等待老师批改';
+    document.getElementById('portal-submit').textContent = 'Submitted · waiting for review';
     updateProgress();
     if (submittedReviewMode) renderSubmittedDifficultyFlags(result.difficultyFlags || []);
     else {
